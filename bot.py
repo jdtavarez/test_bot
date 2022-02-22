@@ -6,7 +6,9 @@ load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD = os.getenv('DISCORD_GUILD')
 
-client = discord.Client()
+intents = discord.Intents.all()
+
+client = discord.Client(intents=intents)
 
 @client.event 
 async def on_ready():
@@ -15,8 +17,11 @@ async def on_ready():
             break
 
     print(
-        f'{client.user} has connected to Discord!'
+        f'{client.user} has connected to Discord!\n'
         f'{guild.name} (id: {guild.id} )'
     )
+
+    members = '\n - '.join([member.display_name for member in guild.members])
+    print(f'Guild Members:\n - {members}')
 
 client.run(TOKEN)
